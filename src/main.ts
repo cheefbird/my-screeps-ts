@@ -14,23 +14,21 @@ declare global {
     This is how you can extend the 'built-in' interfaces from @types/screeps.
   */
   // Memory extension samples
-  interface Memory {
-    uuid: number;
-    log: any;
-  }
-
-  interface CreepMemory {
-    role: string;
-    room: string;
-    working: boolean;
-  }
-
+  // interface Memory {
+  //   uuid: number;
+  //   log: any;
+  // }
+  // interface CreepMemory {
+  //   role: string;
+  //   room: string;
+  //   working: boolean;
+  // }
   // Syntax for adding proprties to `global` (ex "global.log")
-  namespace NodeJS {
-    interface Global {
-      log: any;
-    }
-  }
+  // namespace NodeJS {
+  //   interface Global {
+  //     log: any;
+  //   }
+  // }
 }
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
