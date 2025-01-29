@@ -3,20 +3,27 @@ import { Config } from "config";
 export default class SpawnManager {
   spawns: StructureSpawn[] = [];
   spawnNames: string[] = [];
-  spawnCount: number = 0;
 
   constructor() {
+    this.updateSpawns();
+  }
+
+  updateSpawns(): void {
+    var spawnCount = this.getSpawnCount();
+
     for (const [key, value] of Object.entries(Game.spawns)) {
       this.spawns.push(value);
       this.spawnNames.push(key);
     }
+
+    if (Config.VERBOSE) {
+      let spawnCount = _.size(this.spawnNames);
+      console.log(`INFO: ${spawnCount} spawn(s) found.`);
+    }
   }
 
-  updateSpawns() {
-    this.spawnCount = _.size(this.spawnNames);
-    if (Config.VERBOSE) {
-      console.log(`INFO: ${this.spawnCount} spawns in room`);
-    }
+  getSpawnCount(): number {
+    return _.size(this.spawnNames);
   }
 
   getFirstSpawn(): StructureSpawn {

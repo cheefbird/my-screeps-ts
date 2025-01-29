@@ -1,12 +1,13 @@
+import RoomManager from "./room-manager";
 import SpawnManager from "./spawn-manager";
 
 export default class GameManager {
-  roomManager: string;
+  roomManager: RoomManager;
   spawnManager: SpawnManager;
   sourceManager: string;
 
   constructor() {
-    this.roomManager = "room manager";
+    this.roomManager = new RoomManager();
     this.spawnManager = new SpawnManager();
     this.sourceManager = "source manager";
 
