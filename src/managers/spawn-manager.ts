@@ -1,21 +1,25 @@
 import { Config } from "config";
 
-export class SpawnManager {
-  public spawns: StructureSpawn[] = [];
-  public spawnNames: string[] = [];
-  public spawnCount: number = 0;
+export default class SpawnManager {
+  spawns: StructureSpawn[] = [];
+  spawnNames: string[] = [];
+  spawnCount: number = 0;
 
-  public constructor() {
+  constructor() {
     for (const [key, value] of Object.entries(Game.spawns)) {
       this.spawns.push(value);
       this.spawnNames.push(key);
     }
   }
 
-  public updateSpawns() {
+  updateSpawns() {
     this.spawnCount = _.size(this.spawnNames);
     if (Config.VERBOSE) {
       console.log(`INFO: ${this.spawnCount} spawns in room`);
     }
+  }
+
+  getFirstSpawn(): StructureSpawn {
+    return this.spawns[0];
   }
 }
