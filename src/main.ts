@@ -1,3 +1,6 @@
+import { Config } from "config";
+import GameManager from "managers/game-manager";
+import { HarvesterRole } from "roles/HarvesterRole";
 import { ErrorMapper } from "utils/ErrorMapper";
 
 declare global {
@@ -31,15 +34,26 @@ declare global {
   // }
 }
 
+const gm = new GameManager();
+gm.bootstrap();
+
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 export const loop = ErrorMapper.wrapLoop(() => {
   console.log(`Current game tick is ${Game.time}`);
 
   // Automatically delete memory of missing creeps
-  for (const name in Memory.creeps) {
-    if (!(name in Game.creeps)) {
-      delete Memory.creeps[name];
-    }
+  // for (const name in Memory.creeps) {
+  //   if (!(name in Game.creeps)) {
+  //     delete Memory.creeps[name];
+  //   }
+  // }
+  if (gm.creepManager.creepCount < Config.MAX_HARVESTERS_PER_SOURCE) {
+    gm.creepManager.spawnHarvesterCreep(gm.spawnManager.getFirstSpawn());
+  }
+
+  for (var name in Game.creeps) {
+    let creep = Game.creeps[name];
+    gm.harvesterRole.run(creep);
   }
 });
